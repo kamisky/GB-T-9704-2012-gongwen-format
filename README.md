@@ -1,4 +1,4 @@
-# GB/T 9704—2012 党政机关公文格式生成器
+# GB/T 9704—2012 公文格式 Skill
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -47,7 +47,7 @@ python scripts/verify.py output.docx
 ## 项目结构
 
 ```
-gongwen-format/
+GB/T 9704—2012 公文格式 Skill/
 ├── fonts/
 │   └── 方正小标宋简体.ttf          # 公文红头/标题字体（已打包）
 ├── references/

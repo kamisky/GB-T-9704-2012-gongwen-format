@@ -1,5 +1,5 @@
 ---
-name: gongwen-format
+name: "GB/T 9704—2012 公文格式 Skill"
 version: 1.0.0
 summary: 按 GB/T 9704—2012 国标生成规范党政机关公文 (.docx)，覆盖普通文件/信函/命令(令)/纪要四种格式
 author: WorkBuddy
@@ -11,7 +11,7 @@ read_when:
 disable: true
 ---
 
-# 公文格式生成 Skill（GB/T 9704—2012）
+# GB/T 9704—2012 公文格式 Skill
 
 本 skill 依据国标 **GB/T 9704—2012《党政机关公文格式》** 全文蒸馏构建，参数全部来自标准正文，可重复、可校验地输出规范公文 .docx。
 
