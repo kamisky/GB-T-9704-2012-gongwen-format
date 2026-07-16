@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""GB/T 9704—2012 党政机关公文格式生成器。
+"""GB/T 9704—2012 公文格式 Skill 生成器。
 用法: python gongwen_gen.py <content.json> [输出.docx]
 content.json 结构见 templates/content_schema.json。覆盖普通文件/信函/命令(令)/纪要四种格式。
 参数全部来自 references/gbt9704-2012-spec.md。
