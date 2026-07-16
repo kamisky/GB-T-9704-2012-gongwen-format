@@ -1,5 +1,7 @@
 # GB/T 9704—2012 公文格式 Skill
 
+> **仓库**：`GB/T 9704—2012-gongwen-format` | **描述**：GB/T 9704—2012 公文格式 Skill
+
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
