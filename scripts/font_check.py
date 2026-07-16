@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """检测本机公文四款字体可用性，输出可用族名映射。
 用法: python font_check.py   (打印并写 font_map.json 到脚本目录)
-可被 GB/T 9704—2012 公文格式生成器导入: from font_check import resolve_fonts
+可被 GB/T 9704—2012 公文格式 Skill 导入: from font_check import resolve_fonts
 """
 import os, sys, json, winreg
 
