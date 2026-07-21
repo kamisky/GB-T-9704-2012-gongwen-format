@@ -7,12 +7,13 @@
 
 > 依据国标 **GB/T 9704—2012《党政机关公文格式》** 全文蒸馏构建，可重复、可校验地输出规范公文 `.docx`。
 
-## 特性
+## ✨ 特性
 
 - **四种格式**：普通文件 / 信函 / 命令(令) / 纪要
 - **字体自动检测**：方正小标宋简体（已打包，一键安装）
-- **自检闭环**：生成后自动对照国标逐项检查
-- **学习闭环**：偏差自动记录，下次优先规避
+- **🆕 自动审查修复**：生成后自动对照国标 16 项检查，发现问题自动修复并重新生成（最多 3 轮循环），确保输出合规
+- **自检闭环**：可自动修复发文字号括号（`[]`→`〔〕`）、成文日期格式（`2026-7-16`→`2026年7月16日`）等常见错误
+- **学习闭环**：偏差自动记录到 `known_issues.md`，下次优先规避
 
 ## 快速开始
 
@@ -28,21 +29,21 @@ pip install python-docx
 python scripts/install_font.py fonts/方正小标宋简体.ttf
 ```
 
-### 3. 生成公文
+### 3. 生成公文（推荐：自动审查修复）
 
 ```bash
-python scripts/gongwen_gen.py templates/content_schema.json output.docx
+python scripts/review_fix.py templates/content_schema.json output.docx
 ```
 
-或自定义内容：
+脚本会自动执行：**生成 → 自检（16项）→ 发现问题 → 自动修复 → 重新生成**，循环至全部通过或无法自动修复为止。
+
+### 4. 或：分步执行
 
 ```bash
+# 仅生成
 python scripts/gongwen_gen.py my_content.json output.docx
-```
 
-### 4. 自检
-
-```bash
+# 仅自检
 python scripts/verify.py output.docx
 ```
 
@@ -50,24 +51,55 @@ python scripts/verify.py output.docx
 
 ```
 GB/T 9704—2012 公文格式 Skill/
+├── samples/                          # 四种格式样例 .docx
+│   ├── 公文样例_standard.docx
+│   ├── 公文样例_letter.docx
+│   ├── 公文样例_order.docx
+│   └── 公文样例_minutes.docx
 ├── fonts/
-│   └── 方正小标宋简体.ttf          # 公文红头/标题字体（已打包）
+│   └── 方正小标宋简体.ttf            # 公文红头/标题字体（已打包）
 ├── references/
-│   ├── gbt9704-2012-spec.md        # 国标参数蒸馏
-│   ├── element-layout.md           # 要素编排速查表
-│   ├── font-strategy.md            # 字体检测与回退表
-│   └── known_issues.md             # 自学习闭环（偏差记录）
+│   ├── gbt9704-2012-spec.md          # 国标参数蒸馏
+│   ├── element-layout.md             # 要素编排速查表
+│   ├── font-strategy.md              # 字体检测与回退表
+│   └── known_issues.md               # 自学习闭环（偏差记录）
 ├── scripts/
-│   ├── font_check.py               # 系统字体检测
-│   ├── install_font.py             # 字体安装（TTF头校验）
-│   ├── gongwen_gen.py              # 核心生成器（4种格式）
-│   └── verify.py                   # 生成后自检（16项）
+│   ├── font_check.py                 # 系统字体检测
+│   ├── install_font.py               # 字体安装（TTF头校验）
+│   ├── gongwen_gen.py                # 核心生成器（4种格式）
+│   ├── verify.py                     # 生成后自检（16项）
+│   └── review_fix.py                 # 🆕 自动审查修复（生成+自检+修复循环）
 ├── templates/
-│   └── content_schema.json         # 4种格式输入样例
+│   └── content_schema.json           # 4种格式输入样例
 ├── README.md
 ├── LICENSE
 └── requirements.txt
 ```
+
+## 🆕 自动审查修复详解
+
+`review_fix.py` 实现 "生成 → 自检 → 修复 → 重新生成" 闭环：
+
+```
+第1轮：生成 .docx → 自检发现 2 项失败
+       🔧 发文字号: '云办发[2026]12号' → '云办发〔2026〕12号'
+       🔧 date: '2026-7-16' → '2026年7月16日'
+       🔧 print_date: '2026/07/16' → '2026年7月16日'
+第2轮：重新生成 → 自检全部通过 ✅ 16/16
+```
+
+### 可自动修复的错误
+
+| 错误类型 | 示例 | 修复结果 |
+|----------|------|----------|
+| 发文字号方括号 | `云办发[2026]12号` | `云办发〔2026〕12号` |
+| 日期格式不规范 | `2026-7-16` | `2026年7月16日` |
+| 日期斜杠分隔 | `2026/07/16` | `2026年7月16日` |
+| 页面参数偏差 | 边距/版心偏移 | 重新生成修正 |
+
+### 无法自动修复（需用户介入）
+
+- 缺少标题 / 正文 / 主送机关等必要内容
 
 ## 输入格式
 
