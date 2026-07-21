@@ -23,10 +23,16 @@ disable: true
 1. **读已知问题**：先读 `references/known_issues.md`，避免重蹈历史偏差。
 2. **检测字体**：运行 `python scripts/font_check.py`，得到本机可用字体映射表（方正小标宋是否可用）。若提示"方正小标宋未安装"，提示用户运行 `python scripts/install_font.py <FZXBSJW.TTF 路径>`（见字体说明），未装则用宋体回退。
 3. **收集内容**：向用户索取公文要素（发文机关/发文字号/标题/主送/正文/成文日期/抄送/印发机关等）。可自由文本，也可直接给 JSON（见 `templates/content_schema.json`）。
-4. **生成**：运行 `python scripts/gongwen_gen.py <content.json> <输出.docx>` 生成文档。
-5. **自检**：运行 `python scripts/verify.py <输出.docx>`，对照国标逐项检查，偏差写入 `references/known_issues.md`。
-6. **交付**：将 .docx 复制到用户工作目录，用 present_files 呈现。
-7. **学习闭环**：若生成/自检中发现新偏差，把"现象+国标依据+修复"追加进 `references/known_issues.md`，下次触发时优先回读。
+4. **生成 + 自动审查修复**：运行 `python scripts/review_fix.py <content.json> <输出.docx>`。脚本自动执行：
+   - 生成 .docx
+   - 运行自检（对照国标 16 项检查）
+   - 如有失败项，自动分析并修复（最多 3 轮循环）
+   - 可自动修复：发文字号括号（`[]`→`〔〕`）、成文日期格式（`2026-7-16`→`2026年7月16日`）、页面参数偏差等
+   - 无法自动修复的偏差（如缺少标题/正文）会提示用户介入
+5. **交付**：将 .docx 复制到用户工作目录，用 present_files 呈现。
+6. **学习闭环**：偏差自动追加到 `references/known_issues.md`，下次触发时优先回读。
+
+> 💡 也可单独运行自检：`python scripts/verify.py <输出.docx>`（仅检查不修复）。
 
 ## 输入约定
 
