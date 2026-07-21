@@ -1,7 +1,7 @@
 ---
 name: "GB/T 9704—2012 公文格式 Skill"
 version: 1.0.0
-summary: 按 GB/T 9704—2012 国标生成规范党政机关公文 (.docx)，覆盖普通文件/信函/命令(令)/纪要四种格式
+description: 按 GB/T 9704—2012 国标生成规范党政机关公文 (.docx)，覆盖普通文件/信函/命令(令)/纪要四种格式
 author: WorkBuddy
 agent_created: true
 read_when:
