@@ -8,7 +8,7 @@ read_when:
   - 生成公文 / 红头文件 / 党政机关公文
   - 生成信函 / 命令(令) / 纪要
   - GB/T 9704 / GB9704 / 公文格式
-disable: true
+disable: false
 ---
 
 # GB/T 9704—2012 公文格式 Skill
